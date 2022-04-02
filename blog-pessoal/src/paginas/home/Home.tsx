@@ -1,5 +1,5 @@
-import react from 'react';
-import { Paper, Box, Button, Grid, Typography } from '@material-ui/core';
+import React from 'react';
+import { Box, Button, Grid, Typography } from '@material-ui/core';
 import TabPostagem from '../../components/postagens/tabpostagem/TabPostagem';
 import './Home.css';
 
