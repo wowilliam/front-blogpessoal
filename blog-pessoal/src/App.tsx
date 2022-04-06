@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import Navbar from './components/estaticos/navbar/Navbar';
 import Footer from './components/estaticos/footer/Footer';
 import CadastroUsuario from './paginas/cadastroUsuario/CadastroUsuario';
@@ -12,9 +13,12 @@ import CadastroPostagem from './components/postagens/cadastroPostagem/CadastroPo
 import CadastroTema from './components/temas/cadastroTema/CadastroTema';
 import DeletarPostagem from './components/postagens/deletarPostagem/DeletarPostagem';
 import DeletarTema from './components/temas/deletarTema/DeletarTema';
+import store from './store/store';
+
 
 function App() {
   return (
+    <Provider store={store}>
     <Router>
       <Navbar />
       <switch>
@@ -67,6 +71,7 @@ function App() {
       </switch>
       <Footer />
     </Router>
+    </Provider>
   );
 }
 

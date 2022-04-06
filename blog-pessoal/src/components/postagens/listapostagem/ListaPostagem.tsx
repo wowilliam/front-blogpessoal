@@ -1,35 +1,45 @@
-import React, { useEffect, useState }  from 'react';
-import { Link, useHistory  } from 'react-router-dom';
-import { Box, Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
-import Postagem from '../../../models/Postagem';
-import './ListaPostagem.css';
-import useLocalStorage from 'react-use-localstorage';
-import { busca } from '../../../services/Service';
+import React, { useEffect, useState } from 'react'
+import { Box, Button, Card, CardActions, CardContent, Typography } from '@material-ui/core'
+import { Link, useHistory } from 'react-router-dom'
+
+import { useSelector } from 'react-redux'
+import { UserState } from '../../../store/tokens/tokensReducer';
+
+import Postagem from '../../../models/Postagem'
+import { busca } from '../../../services/Service'
+
+import './ListaPostagem.css'
+
 
 function ListaPostagem() {
-    let history = useHistory();
 
-        const [posts, setPosts] = useState<Postagem[]>([])
-
-       const [token, setToken] = useLocalStorage("token");
-
-       useEffect(() => {
-        if (token === "") {
-            alert("Você precisa estar logado")
-            history.push("/login")
-        }
+    let history = useHistory()
+  
+    const [posts, setPost] = useState<Postagem[]>([])
+  
+    const token = useSelector<UserState, UserState["tokens"]>(
+      (state) => state.tokens
+    )
+  
+    useEffect(() => {
+      if (token === "") {
+        alert("Você precisa estar logado")
+        history.push("/login")
+      }
     }, [token])
-
-        async function getPost() {
-        await busca(`/postagens/all`, setPosts, {
-            headers: { "Authorization": token }
-             
-        })
+  
+    async function getPost() {
+      await busca("/postagens", setPost, {
+        headers: {
+          'Authorization': token
+        }
+      })
     }
-
-        useEffect(() => {
+  
+    useEffect(() => {
         getPost()
-    }, [posts.length])
+      }, [posts.length])
+
     return (
         <>
         {    posts.map(posts => (

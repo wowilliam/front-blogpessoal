@@ -1,9 +1,30 @@
-import React from 'react';
-import { Box, Button, Grid, Typography } from '@material-ui/core';
-import TabPostagem from '../../components/postagens/tabpostagem/TabPostagem';
-import './Home.css';
+import React, { useEffect } from 'react'
+import { Box, Button, Grid, Typography } from '@material-ui/core'
+
+import TabPostagem from '../../components/postagens/tabpostagem/TabPostagem'
+import ModalPostagem from '../../components/postagens/modalPostagem/ModalPostagem'
+
+import { Link, useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { UserState } from '../../store/tokens/tokensReducer'
+
+import "./Home.css"
 
 function Home(){
+
+    let history = useHistory()
+
+    const token = useSelector<UserState, UserState["tokens"]>(
+      (state) => state.tokens
+    )
+  
+    useEffect(() => {
+      if (token === "") {
+        alert("Você precisa estar logado")
+        history.push('/home')
+      }
+    }, [token])
+  
     return(
         <>
         <Grid container direction="row" justifyContent="center" alignItems="center" className="caixa">
@@ -15,7 +36,9 @@ function Home(){
                     <Box display="flex" justifyContent="center">
                         <Box marginRight={1}>
                         </Box>
+                        <Link to="/posts" className="text-decorator-none">
                         <Button variant="outlined" className="botao">Ver Postagens</Button>
+                        </Link>
                     </Box>
                 </Grid>                
                 <Grid item xs={6}>
