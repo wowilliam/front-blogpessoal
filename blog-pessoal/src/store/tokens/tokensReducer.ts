@@ -1,7 +1,7 @@
 import { Action } from './action';
 
 // Altere a Interface de TokenState para UserState, e adicione o campo ID
-export interface UserState {
+export interface TokenState  {
     tokens: string,
     id: string,
 }
@@ -13,7 +13,7 @@ const initialState = {
 }
 
 // Mude TokenState para UserState
-export const userReducer = (state: UserState = initialState, action: Action) =>{
+export const tokenReducer = (state: TokenState = initialState, action: Action) =>{
     switch (action.type){
         case "ADD_TOKEN": {
             

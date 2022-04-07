@@ -3,20 +3,33 @@ import { Link, useHistory } from 'react-router-dom';
 import { Box, Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
 import Tema from '../../../models/Tema'
 import './ListaTema.css';
-import useLocalStorage from 'react-use-localstorage';
+import { useSelector } from 'react-redux';
 import { busca } from '../../../services/Service';
+import { TokenState } from '../../../store/tokens/tokensReducer';
+import { toast } from 'react-toastify';
 
 function ListaTema() {
     let history = useHistory();
 
        const [temas, setTemas] = useState<Tema[]>([])
 
-        const [token, setToken] = useLocalStorage("token");
+       const token = useSelector<TokenState, TokenState["tokens"]>(
+        (state) => state.tokens
+    )
 
     
     useEffect(() => {
         if (token === "") {
-            alert("Você precisa estar logado")
+            toast.error("Você precisa estar logado.", {
+                position: "top-right", //posição do alerta
+                autoClose: 2000, //tempo da notificação na tela
+                hideProgressBar: false, //se aparece barra de progresso
+                closeOnClick: true, //se aparece o X para fechar a notificação
+                pauseOnHover: true, //se passar o mouse em cima, o tempo para fechar congela
+                draggable: false, //se pode mover a notificação de local
+                theme: "colored", // visual
+                progress: undefined, 
+            });
             history.push("/login")
         }
     }, [token])

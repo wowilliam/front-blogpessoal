@@ -1,10 +1,10 @@
 import React, { useState, useEffect, ChangeEvent }  from 'react';
-import { useHistory } from 'react-router-dom';
 import { Grid, Box, Typography, Button, TextField } from '@material-ui/core';
-import { Link, } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import User from '../../models/User';
 import { cadastroUsuario } from '../../services/Service';
 import './CadastroUsuario.css';
+import { toast } from 'react-toastify';
 
 function CadastroUsuario() {
     let history = useHistory();
@@ -49,9 +49,28 @@ function CadastroUsuario() {
         e.preventDefault() 
         if (confirmarSenha === user.senha && user.senha.length >= 8) {
             cadastroUsuario(`/usuarios/cadastrar`, user, setUserResult)
-            alert("Usuário cadastrado com sucesso!")
+
+            toast.success("Usuário cadastrado com sucesso!", {
+                position: "top-right", //posição do alerta
+                autoClose: 2000, //tempo da notificação na tela
+                hideProgressBar: false, //se aparece barra de progresso
+                closeOnClick: true, //se aparece o X para fechar a notificação
+                pauseOnHover: true, //se passar o mouse em cima, o tempo para fechar congela
+                draggable: false, //se pode mover a notificação de local
+                theme: "colored", // visual
+                progress: undefined,
+            })
         } else {
-            alert("Favor verificar as informações de cadastro.")
+         toast.error("Dados inconsistentes! Favor verificar as informações de cadastro.", {
+                position: "top-right", //posição do alerta
+                autoClose: 2000, //tempo da notificação na tela
+                hideProgressBar: false, //se aparece barra de progresso
+                closeOnClick: true, //se aparece o X para fechar a notificação
+                pauseOnHover: true, //se passar o mouse em cima, o tempo para fechar congela
+                draggable: false, //se pode mover a notificação de local
+                theme: "colored", // visual
+                progress: undefined,
+            });
         }
     }
 

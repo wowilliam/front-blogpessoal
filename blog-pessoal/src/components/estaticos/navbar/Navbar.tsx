@@ -3,8 +3,9 @@ import { AppBar, Toolbar, Typography, Box } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import './Navbar.css';
-import { UserState  } from '../../../store/tokens/tokensReducer';
+import { TokenState } from '../../../store/tokens/tokensReducer';
 import { addToken } from '../../../store/tokens/action';
+import { toast } from 'react-toastify';
 
 
 function Navbar (){
@@ -13,13 +14,23 @@ function Navbar (){
 
     const dispatch = useDispatch()
 
-    const token = useSelector<UserState, UserState["tokens"]>(
+    const token = useSelector<TokenState, TokenState["tokens"]>(
         (state) => state.tokens
     )
 
     function goLogout() {
         dispatch(addToken(''))
-        alert("Usuário deslogado")
+        toast.info("Usuário deslogado.", {
+            position: "top-right", 
+            autoClose: 2000, 
+            hideProgressBar: false, 
+            closeOnClick: true, 
+            pauseOnHover: true, 
+            draggable: false, 
+            theme: "colored", 
+            progress: undefined, 
+        });
+
         history.push("/login")
     }
 

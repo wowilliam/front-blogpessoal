@@ -6,6 +6,7 @@ import { login } from '../../services/Service';
 import './Login.css';
 import { useDispatch } from 'react-redux';
 import {  addToken } from '../../store/tokens/action';
+import { toast } from 'react-toastify';
 
 function Login() {
     let history = useHistory();
@@ -39,11 +40,29 @@ function Login() {
         e.preventDefault();
         try {
             await login(`/usuarios/logar`, userLogin, setToken)
-            alert("Usuário logado com suscesso!")
+            toast.success("Usuário logado com sucesso!", {
+                position: "top-right", //posição do alerta
+                autoClose: 2000, //tempo da notificação na tela
+                hideProgressBar: false, //se aparece barra de progresso
+                closeOnClick: true, //se aparece o X para fechar a notificação
+                pauseOnHover: true, //se passar o mouse em cima, o tempo para fechar congela
+                draggable: false, //se pode mover a notificação de local
+                theme: "colored", // visual
+                progress: undefined,
+            });
 
         }catch (error){
-            alert("Usuário não encontrados!")}
-        
+            toast.error("Usuário  não encontrados!", {
+                position: "top-right", //posição do alerta
+                autoClose: 2000, //tempo da notificação na tela
+                hideProgressBar: false, //se aparece barra de progresso
+                closeOnClick: true, //se aparece o X para fechar a notificação
+                pauseOnHover: true, //se passar o mouse em cima, o tempo para fechar congela
+                draggable: false, //se pode mover a notificação de local
+                theme: "colored", // visual
+                progress: undefined,
+            });
+        }
     }
 
     return (
